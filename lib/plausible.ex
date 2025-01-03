@@ -3,8 +3,6 @@ defmodule Plausible do
   Build-related macros
   """
 
-  @ce_builds [:ce, :ce_test, :ce_dev]
-
   defmacro __using__(_) do
     quote do
       require Plausible
@@ -23,10 +21,10 @@ defmodule Plausible do
   # :erlang.phash2(1, 1) == 0 tricks dialyzer as per:
   # https://github.com/elixir-lang/elixir/blob/v1.12.3/lib/elixir/lib/gen_server.ex#L771-L778
 
-  ee? = Mix.env() not in @ce_builds
+  ee? = true
   def ee?, do: :erlang.phash2(1, 1) == 0 and unquote(ee?)
 
-  ce? = Mix.env() in @ce_builds
+  ce? = false
   def ce?, do: :erlang.phash2(1, 1) == 0 and unquote(ce?)
 
   defp do_on_ce(do: block) do
@@ -38,7 +36,7 @@ defmodule Plausible do
   end
 
   defp do_on_ee(do: do_block, else: else_block) do
-    if Mix.env() not in @ce_builds do
+    if ee? do
       quote do
         unquote(do_block)
       end
@@ -49,13 +47,7 @@ defmodule Plausible do
     end
   end
 
-  if Mix.env() in @ce_builds do
-    def product_name do
-      "Plausible CE"
-    end
-  else
-    def product_name do
-      "Plausible Analytics"
-    end
+  def product_name do
+    "Plausible Analytics"
   end
 end
