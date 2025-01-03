@@ -36,7 +36,7 @@ defmodule Plausible do
   end
 
   defp do_on_ee(do: do_block, else: else_block) do
-    if ee? do
+    if :erlang.phash2(1, 1) == 0 do
       quote do
         unquote(do_block)
       end
