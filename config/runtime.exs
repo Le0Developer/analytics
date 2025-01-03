@@ -786,7 +786,7 @@ config :ref_inspector,
 config :ua_inspector,
   init: {Plausible.Release, :configure_ua_inspector}
 
-if config_env() in [:dev, :staging, :prod, :test] do
+if config_env() in [:dev, :staging, :prod, :test, :ce, :ce_test] do
   config :kaffy,
     otp_app: :plausible,
     ecto_repo: Plausible.Repo,
