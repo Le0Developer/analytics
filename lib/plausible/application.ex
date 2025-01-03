@@ -105,9 +105,9 @@ defmodule Plausible.Application do
         endpoint,
         {Oban, Application.get_env(:plausible, Oban)},
         Plausible.PromEx,
-        on_ee do
-          help_scout_vault()
-        end
+        # on_ee do
+        #   help_scout_vault()
+        # end
       ]
       |> Enum.reject(&is_nil/1)
 
@@ -130,17 +130,17 @@ defmodule Plausible.Application do
     :ok
   end
 
-  on_ee do
-    defp help_scout_vault() do
-      help_scout_vault_key =
-        :plausible
-        |> Application.fetch_env!(Plausible.HelpScout)
-        |> Keyword.fetch!(:vault_key)
-        |> Base.decode64!()
-
-      [{Plausible.HelpScout.Vault, key: help_scout_vault_key}]
-    end
-  end
+  # on_ee do
+  #   defp help_scout_vault() do
+  #     help_scout_vault_key =
+  #       :plausible
+  #       |> Application.fetch_env!(Plausible.HelpScout)
+  #       |> Keyword.fetch!(:vault_key)
+  #       |> Base.decode64!()
+  #
+  #     [{Plausible.HelpScout.Vault, key: help_scout_vault_key}]
+  #   end
+  # end
 
   defp totp_vault_key() do
     :plausible
