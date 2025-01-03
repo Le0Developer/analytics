@@ -54,7 +54,6 @@ defmodule Plausible.MixProject do
   defp elixirc_paths(env) when env in [:ce_test, :ce_dev],
     do: ["lib", "test/support"]
 
-  defp elixirc_paths(:ce), do: ["lib"]
   defp elixirc_paths(_), do: ["lib", "extra/lib"]
 
   # Specifies your project dependencies.
